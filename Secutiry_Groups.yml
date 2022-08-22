@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Create SecurityGroup
+
+Parameters:
+# Input Parameters
+  VPCID:
+    Description: "VPC ID"
+    Type: AWS::EC2::VPC::Id
+
+Resources:
+# Security Group
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: test-sg
+      GroupDescription: Prefix test Security Group
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 22
+          ToPort: 22
+          SourcePrefixListId: !ImportValue test-prefix
+      SecurityGroupEgress:
+        - CidrIp: "0.0.0.0/0"
+          IpProtocol: "-1"
+      VpcId: !Ref VPCID
+      Tags:
+        - Key: Name
+          Value: test-sg
+# OutPut
+Outputs:
+  SecurityGroup:
+    Value: !Ref SecurityGroup
+    Description: Prefix test Security Group
+    Export:
+      Name: test-sg

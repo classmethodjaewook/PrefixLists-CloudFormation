@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create PrefixList for SecurityGroup
+Resources:
+# PrefixList
+  PrefixList:
+    Type: AWS::EC2::PrefixList
+    Properties: 
+      AddressFamily: IPv4
+      Entries: 
+        - Cidr: x.x.x.x/x
+        - Cidr: x.x.x.x/x
+        - Cidr: x.x.x.x/x
+        - Cidr: x.x.x.x/x
+      MaxEntries: 4
+      PrefixListName: test-prefix
+
+# Outputs
+Outputs:
+  PrefixList:
+    Value: !Ref PrefixList
+    Export:
+      Name: !Sub test-prefix
